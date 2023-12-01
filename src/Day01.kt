@@ -1,6 +1,18 @@
 fun main() {
     fun part1(input: List<String>): Int {
-        return input.size
+
+        val numbers = ArrayList<Int>()
+
+        input.forEach {
+            val lineNumbers = it.replace("[^0-9]".toRegex(), "")
+            val firstNumber = lineNumbers[0].toString()
+            val lastNumber = lineNumbers[lineNumbers.length - 1].toString()
+            val result = firstNumber.plus(lastNumber).toInt()
+            numbers.add(result)
+        }
+
+        return numbers.sum()
+
     }
 
     fun part2(input: List<String>): Int {
