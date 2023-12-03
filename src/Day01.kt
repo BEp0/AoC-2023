@@ -24,7 +24,7 @@ private fun calibration(input: String): Int {
     return "$first$last".toInt()
 }
 
-fun calibrationV2(input: String): Int {
+private fun calibrationV2(input: String): Int {
     val regex = "one|two|three|four|five|six|seven|eight|nine|[0-9]".toRegex()
     val regexReversed = "eno|owt|eerht|ruof|evif|xis|neves|thgie|enin|[0-9]".toRegex()
     val reversed = input.reversed()
