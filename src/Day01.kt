@@ -1,18 +1,6 @@
 fun main() {
     fun part1(input: List<String>): Int {
-
-        val numbers = ArrayList<Int>()
-
-        input.forEach {
-            val lineNumbers = it.replace("[^0-9]".toRegex(), "")
-            val firstNumber = lineNumbers[0].toString()
-            val lastNumber = lineNumbers[lineNumbers.length - 1].toString()
-            val result = firstNumber.plus(lastNumber).toInt()
-            numbers.add(result)
-        }
-
-        return numbers.sum()
-
+        return input.sumOf { calibration(it) }
     }
 
     fun part2(input: List<String>): Int {
@@ -21,9 +9,15 @@ fun main() {
 
     // test if implementation meets criteria from the description, like:
     val testInput = readInput("Day01_test")
-    check(part1(testInput) == 1)
+    check(part1(testInput) == 142)
 
     val input = readInput("Day01")
     part1(input).println()
     part2(input).println()
+}
+
+private fun calibration(input: String): Int {
+    val first = input.first { it.isDigit() }
+    val last = input.last { it.isDigit() }
+    return "$first$last".toInt()
 }
