@@ -57,7 +57,7 @@ private fun checkIsValidGame(subsets: List<String>): Boolean {
     }.isEmpty()
 }
 
-fun hasInvalidSet(cubesSet: List<String>): Boolean {
+private fun hasInvalidSet(cubesSet: List<String>): Boolean {
     return cubesSet.filter {
         val cube = it.trim().split(" ")
 
@@ -83,7 +83,7 @@ private fun validGame(gameInput: String): Int {
     return 0
 }
 
-fun getColorSize(color: String): Int = when(color) {
+private fun getColorSize(color: String): Int = when(color) {
     "red" -> 12
     "green" -> 13
     "blue" -> 14
