@@ -6,15 +6,46 @@ fun main() {
     }
 
     fun part2(input: List<String>): Int {
-        return input.size
+        return input.sumOf { getCubePower(it) }
     }
 
     val testInput = readInput("Day02_test")
     check(part1(testInput) == 8)
+    check(part2(testInput) == 2286)
 
     val input = readInput("Day02")
     part1(input).println()
     part2(input).println()
+}
+
+private fun getCubePower(cubeSets: String): Int {
+
+    val cubesMaxPowers: MutableMap<String, Int> = mutableMapOf(
+        "blue" to 1,
+        "red" to 1,
+        "green" to 1
+    )
+
+    val possiblePowers = cubeSets.replace("Game .*:".toRegex(), "")
+        .split("[;,]".toRegex())
+        .map { it.trim() }
+
+    possiblePowers.forEach {
+
+        val cube = it.split(" ")
+        val cubePower: Int = cube[0].toInt()
+        val cubeColor = cube[1]
+
+        if (cubePower > cubesMaxPowers[cubeColor]!!) {
+            cubesMaxPowers[cubeColor] = cubePower
+        }
+    }
+
+    val maxPowerBlue = cubesMaxPowers["blue"]!!
+    val maxPowerRed = cubesMaxPowers["red"]!!
+    val maxPowerGreen = cubesMaxPowers["green"]!!
+
+    return maxPowerBlue * maxPowerRed * maxPowerGreen
 }
 
 private fun getGameId(game: String) = game.replace("Game ", "").toInt()
