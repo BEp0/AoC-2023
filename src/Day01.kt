@@ -8,12 +8,12 @@ fun main() {
     }
 
     // test if implementation meets criteria from the description, like:
-    val testInput = readInput("Day01_test")
-    val testInput2 = readInput("Day01_test_p2")
+    val testInput = readInput("day01_test")
+    val testInput2 = readInput("day01_test_p2")
     check(part1(testInput) == 142)
     check(part2(testInput2) > 0)
 
-    val input = readInput("Day01")
+    val input = readInput("day01")
     part1(input).println()
     part2(input).println()
 }

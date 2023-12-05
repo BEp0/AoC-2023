@@ -9,11 +9,11 @@ fun main() {
         return input.sumOf { getCubePower(it) }
     }
 
-    val testInput = readInput("Day02_test")
+    val testInput = readInput("day02_test")
     check(part1(testInput) == 8)
     check(part2(testInput) == 2286)
 
-    val input = readInput("Day02")
+    val input = readInput("day02")
     part1(input).println()
     part2(input).println()
 }
