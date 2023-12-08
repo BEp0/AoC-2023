@@ -1,7 +1,6 @@
 package days
 
 import readInput
-import java.lang.RuntimeException
 
 class Day03(
     override val day: Int = 3,
@@ -17,8 +16,7 @@ class Day03(
 
     override fun part1(input: List<String>): Int {
         val engineSchematic = input.mapIndexed { index, line -> mountEngineSchematic(line, index) }
-        return engineSchematic.findValid()
-            .sumOf { it.number }
+        return engineSchematic.findValid().sumOf { it.number }
     }
 
     private fun mountEngineSchematic(line: String, row: Int): List<Element> = buildList {
@@ -59,8 +57,7 @@ class Day03(
         val symbols = this.flatten().filterIsInstance<Symbol>()
         return numbers.filter { number ->
             symbols.any { symbol ->
-                symbol.column in number.expandedColumn &&
-                        symbol.row in number.expandedRow
+                symbol.column in number.expandedColumn && symbol.row in number.expandedRow
             }
         }.toSet()
     }
