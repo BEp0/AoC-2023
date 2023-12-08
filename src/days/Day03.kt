@@ -1,4 +1,26 @@
-fun main() {
+package days
+
+import readInput
+import java.lang.RuntimeException
+
+class Day03(
+    override val day: Int = 3,
+    override val part1ExpectationTest: Int = 4361,
+    override val part2ExpectationTest: Int = 10, // 467835
+    override val inputPart: List<String> = readInput("day03"),
+    override val inputTest1: List<String> = readInput("day03_test"),
+    override val inputTest2: List<String> = readInput("day03_test")
+) : Day<Int, List<String>> {
+    override fun part2(input: List<String>): Int {
+        return input.size
+    }
+
+    override fun part1(input: List<String>): Int {
+        val engineSchematic = input.mapIndexed { index, line -> mountEngineSchematic(line, index) }
+        return engineSchematic.findValid()
+            .sumOf { it.number }
+    }
+
     fun mountEngineSchematic(line: String, row: Int): List<Element> = buildList {
         var start = -1
         var currentNumber = ""
@@ -28,7 +50,7 @@ fun main() {
         }
 
         if (currentNumber.isNotEmpty()) {
-            this.add(Number(number = currentNumber.toInt(),start..<line.length, row = row))
+            this.add(Number(number = currentNumber.toInt(), start..<line.length, row = row))
         }
     }
 
@@ -43,27 +65,11 @@ fun main() {
         }.toSet()
     }
 
-    fun part1(input: List<String>): Int {
-        val engineSchematic = input.mapIndexed { index, line -> mountEngineSchematic(line, index) }
-        return engineSchematic.findValid()
-            .sumOf { it.number }
+    sealed class Element()
+    data class Number(val number: Int, val xRange: IntRange, val row: Int) : Element() {
+        val expandedColumn = xRange.first - 1..xRange.last + 1
+        val expandedRow = row - 1..row + 1
     }
 
-    fun part2(input: List<String>): Long {
-        return input.size.toLong()
-    }
-
-    val testInput = readInput("day03_test")
-    check(part1(testInput) == 4361)
-
-    val input = readInput("day03")
-    part1(input).println()
-    part2(input).println()
+    data class Symbol(val position: Char, val column: Int, val row: Int) : Element()
 }
-
-sealed class Element()
-data class Number(val number: Int, val xRange: IntRange, val row: Int) : Element() {
-    val expandedColumn = xRange.first - 1..xRange.last + 1
-    val expandedRow = row - 1..row + 1
-}
-data class Symbol(val position: Char, val column: Int, val row: Int) : Element()
