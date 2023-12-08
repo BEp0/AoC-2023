@@ -18,17 +18,14 @@ class Day02(
     override fun part1(input: List<String>): Int {
         return input.sumOf { validGame(it) }
     }
+
     private fun getCubePower(cubeSets: String): Int {
 
         val cubesMaxPowers: MutableMap<String, Int> = mutableMapOf(
-            "blue" to 1,
-            "red" to 1,
-            "green" to 1
+            "blue" to 1, "red" to 1, "green" to 1
         )
 
-        val possiblePowers = cubeSets.replace("Game .*:".toRegex(), "")
-            .split("[;,]".toRegex())
-            .map { it.trim() }
+        val possiblePowers = cubeSets.replace("Game .*:".toRegex(), "").split("[;,]".toRegex()).map { it.trim() }
 
         possiblePowers.forEach {
 
@@ -47,6 +44,7 @@ class Day02(
 
         return maxPowerBlue * maxPowerRed * maxPowerGreen
     }
+
     private fun getGameId(game: String) = game.replace("Game ", "").toInt()
 
     private fun checkIsValidGame(subsets: List<String>): Boolean {
@@ -76,13 +74,12 @@ class Day02(
 
         val gameId = getGameId(game)
         val isValidGame = checkIsValidGame(subsets.split(";"))
-        if (isValidGame)
-            return gameId
+        if (isValidGame) return gameId
 
         return 0
     }
 
-    private fun getColorSize(color: String): Int = when(color) {
+    private fun getColorSize(color: String): Int = when (color) {
         "red" -> 12
         "green" -> 13
         "blue" -> 14
