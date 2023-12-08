@@ -57,7 +57,7 @@ class Day02(
     }
 
     private fun hasInvalidSet(cubesSet: List<String>): Boolean {
-        return cubesSet.filter {
+        return cubesSet.any {
             val cube = it.trim().split(" ")
 
             val colorSize = cube[0].toInt()
@@ -66,7 +66,7 @@ class Day02(
             val maxColorSize = getColorSize(color)
 
             colorSize > maxColorSize
-        }.isNotEmpty()
+        }
     }
 
     private fun validGame(gameInput: String): Int {

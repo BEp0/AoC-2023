@@ -21,7 +21,7 @@ class Day03(
             .sumOf { it.number }
     }
 
-    fun mountEngineSchematic(line: String, row: Int): List<Element> = buildList {
+    private fun mountEngineSchematic(line: String, row: Int): List<Element> = buildList {
         var start = -1
         var currentNumber = ""
 
@@ -54,7 +54,7 @@ class Day03(
         }
     }
 
-    fun List<List<Element>>.findValid(): Set<Number> {
+    private fun List<List<Element>>.findValid(): Set<Number> {
         val numbers = this.flatten().filterIsInstance<Number>()
         val symbols = this.flatten().filterIsInstance<Symbol>()
         return numbers.filter { number ->
