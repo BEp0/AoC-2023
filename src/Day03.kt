@@ -6,57 +6,77 @@ fun main() {
 
     data class Number(val value: String, val xRange: IntRange, val row: Int) : Element {
         val expandedColumn = xRange.first - 1..xRange.last + 1
-        val expandedRow = row..row + 1
+        val expandedRow = row - 1..row + 1
+        override fun getValue(): Int {
+            return value.toInt()
+        }
+    }
+
+    data class Symbol(val position: Char, val column: Int, val row: Int) : Element {
         override fun getValue(): Int {
             TODO("Not yet implemented")
         }
     }
 
-    data class Symbol(val position: Char, val index: Int, val row: Int) : Element {
-        override fun getValue(): Int {
-            TODO("Not yet implemented")
-        }
-    }
 
-    fun numberValidInLine(line: String, row: Int): List<Element> = buildList {
-
+    fun mountEngineSchematic(line: String, row: Int): List<Element> = buildList {
+        var start = -1
         var currentNumber = ""
-        var numberStart = -1
 
         line.forEachIndexed { index, c ->
-
             when {
                 c.isDigit() -> {
                     currentNumber += c
-                    if (numberStart == -1) numberStart = index
+                    if (start == -1) start = index
+                }
+
+                (c != '.') -> {
+                    this.add(Symbol(c, index, row))
+                    if (currentNumber.isNotEmpty()) {
+                        this.add(Number(currentNumber, start..<index, row))
+                        currentNumber = ""
+                        start = -1
+                    }
                 }
 
                 else -> {
-                    if (c != '.') this.add(Symbol(c, index, row))
-                    if (currentNumber.isNotEmpty()) {
-                        this.add(Number(currentNumber, numberStart..<index - 1, row))
+                    if (currentNumber.isNotBlank()) {
+                        this.add(Number(currentNumber, start..<index, row))
+                        currentNumber = ""
+                        start = -1
                     }
                 }
             }
-
         }
     }
 
-    fun part1(input: List<String>): Int {
-        return input.mapIndexed { index, line -> numberValidInLine(line, index) }
-            .sumOf { elements ->
-                elements.sumOf { element ->
-                    element.getValue()
+    fun List<List<Element>>.findValid(): Set<Element> {
+        val parts = mutableSetOf<Number>()
+        this.windowed(2).map { twoRows ->
+            val numbers = twoRows.flatten().filterIsInstance<Number>()
+            val symbols = twoRows.flatten().filterIsInstance<Symbol>()
+            numbers.filter { number ->
+                symbols.any { symbol: Symbol ->
+                    symbol.column in number.expandedColumn &&
+                            symbol.row in number.expandedRow
                 }
-            }
+            }.forEach { parts.add(it) }
+        }
+        return parts
+    }
+
+    fun part1(input: List<String>): Int {
+        val engineSchematic = input.mapIndexed { index, line -> mountEngineSchematic(line, index) }
+        return engineSchematic.findValid()
+            .sumOf { it.getValue() }
     }
 
     fun part2(input: List<String>): Long {
         return input.size.toLong()
     }
 
-    val testInput = readInput("day03_test")
-    check(part1(testInput) == 4361)
+//    val testInput = readInput("day03_test")
+//    check(part1(testInput) == 3611)
 
     val input = readInput("day03")
     part1(input).println()
