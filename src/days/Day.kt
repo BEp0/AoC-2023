@@ -1,8 +1,5 @@
 package days
 
-import java.time.LocalTime
-import kotlin.time.Duration
-import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.measureTime
 
 interface Day<T, I> {
@@ -14,7 +11,7 @@ interface Day<T, I> {
     val inputTest2: I
     fun part1(input: I): T
     fun part2(input: I): T
-    fun run() {
+    fun exec() {
 
         val test1 = part1(inputTest1)
         val test2 = part2(inputTest2)
