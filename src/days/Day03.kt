@@ -2,6 +2,8 @@ package days
 
 import readInput
 
+private const val GEAR = '*'
+
 class Day03(
     override val day: Int = 3,
     override val part1ExpectationTest: Int = 4361,
@@ -13,7 +15,7 @@ class Day03(
 
     override fun part2(input: List<String>): Int {
         val engineSchematic = input.mapIndexed { index, line -> mountEngineSchematic(line, index) }
-        return engineSchematic.findGear().sum()
+        return engineSchematic.findGearValidNumbers().sum()
     }
 
     override fun part1(input: List<String>): Int {
@@ -64,10 +66,10 @@ class Day03(
         }.toSet()
     }
 
-    private fun List<List<Element>>.findGear(): List<Int> {
+    private fun List<List<Element>>.findGearValidNumbers(): List<Int> {
         val numbersNextGear = LinkedHashMap<Symbol, ArrayList<Number>>()
         val numbers = this.flatten().filterIsInstance<Number>()
-        val symbols = this.flatten().filterIsInstance<Symbol>().filter { it.value == '*' }
+        val symbols = this.flatten().filterIsInstance<Symbol>().filter { it.value == GEAR }
 
         numbers.forEach { number ->
             symbols.any { symbol ->
