@@ -5,7 +5,7 @@ import readInput
 class Day03(
     override val day: Int = 3,
     override val part1ExpectationTest: Int = 4361,
-    override val part2ExpectationTest: Int = 467835, // 467835
+    override val part2ExpectationTest: Int = 467835,
     override val inputPart: List<String> = readInput("day03"),
     override val inputTest1: List<String> = readInput("day03_test"),
     override val inputTest2: List<String> = readInput("day03_test")
