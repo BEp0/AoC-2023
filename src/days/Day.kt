@@ -13,12 +13,12 @@ interface Day<T, I> {
     fun part2(input: I): T
     fun exec() {
 
+        println("=== Day :: $day ===")
+
         val test1 = part1(inputTest1)
         val test2 = part2(inputTest2)
         check(test1 == part1ExpectationTest)
         check(test2 == part2ExpectationTest)
-
-        println("=== Day :: $day ===")
 
         var part1: T
         val time1 = measureTime {
